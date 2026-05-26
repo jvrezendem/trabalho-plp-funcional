@@ -22,8 +22,10 @@ somatorio (c:r) = c + somatorio r
 
 -- função que verifica se um item esta na lista ou nao
 pertence :: (Eq t) => t -> [t] -> Bool
-pertence i [] = False
+pertence _ [] = False
 pertence e (c:r)
     |e == c = True 
     |otherwise = pertence e r
+
+
     
