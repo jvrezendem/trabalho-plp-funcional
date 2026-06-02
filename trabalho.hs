@@ -9,11 +9,9 @@
 
 -- 2. insere_no_fim: recebe um elemento e uma lista e insere o elemento no final da lista.
 
-insere_no_fim :: (Num t) t -> [t] -> [t]
-insere_no_fim x [] = [x]
-insere_no_fim x (c:r) = c : insere_no_fim x r
-
-
+insere_no_fim :: (Num t) t -> [t] -> [t] -- tipo: recebe um elemento de qualquer tipo e uma lista do mesmo tipo, retorna uma nova lista do mesmo tipo
+insere_no_fim x [] = [x] -- caso base: lista vazia, retorna uma nova lista contendo apenas o elemento x
+insere_no_fim x (c:r) = c : insere_no_fim x r -- caso recursivo: a cabeça da lista é mantida, e o elemento x é inserido no final da calda da lista
 
 
 
