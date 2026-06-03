@@ -1,9 +1,9 @@
 -- Trabalho de Programação Funcional 2026/1 --
 --                 Grupo 2                  --
 -- Alunos:
-    -- Daniel Reis - 202510364
-    -- João Vitor Rezende Marciano - 202510356
-    -- Paulo Sérgio Mendes Taciano - 
+  -- Daniel Reis - 202510364
+  -- João Vitor Rezende Marciano - 202510356
+  -- Paulo Sérgio Mendes Taciano - 
 
 -- Questões: 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35 e 38
 
@@ -38,7 +38,7 @@ reverso (c:r) = concatena (reverso r) [c] -- chama a função concatena para con
 -- 14. Soma todos os elementos de uma lista numerica.
 somatorio :: (Num a) => [a] -> a
 somatorio []     = 0          -- lista vazia: soma e zero
-somatorio (x:xs) = x + somatorio xs  -- soma a cabeca com o somatorio do resto
+somatorio (c:r) = c + somatorio r  -- soma a cabeca com o somatorio do resto
 
 
 -- 17. uniao: recebe duas listas que não contenham elementos repetidos e retorna uma nova com todos os elementos das duas listas originais (sem repetição). 
@@ -47,17 +47,17 @@ somatorio (x:xs) = x + somatorio xs  -- soma a cabeca com o somatorio do resto
 -- Verifica se um elemento pertence a uma lista.
 pertence :: (Eq a) => a -> [a] -> Bool
 pertence _ []     = False             -- lista vazia: nao pertence
-pertence x (y:ys) = x == y           -- encontrou: retorna True
-  || pertence x ys    -- || e curto-circuito: so busca o resto se necessario
+pertence x (c:r) = x == c           -- encontrou: retorna True
+  || pertence x r    -- || e curto-circuito: so busca o resto se necessario
 
 -- Retorna a uniao das duas listas sem repeticao.
 -- Logica: para cada elemento da 1a lista, so inclui se nao estiver na 2a.
 
 uniao :: (Eq a) => [a] -> [a] -> [a]
-uniao [] ys = ys                          -- 1a lista esgotada: retorna a 2a inteira
-uniao (x:xs) ys
-  | pertence x ys = uniao xs ys          -- x ja esta em ys: ignora e continua
-  | otherwise     = x : uniao xs ys      -- x nao esta em ys: inclui na frente
+uniao [] y = y                          -- 1a lista esgotada: retorna a 2a inteira
+uniao (c:r) x
+  | pertence c y = uniao r y          -- c ja esta em y: ignora e continua
+  | otherwise = c : uniao r y      -- c nao esta em y: inclui na frente
 
 
 -- 20. insere_ordenado: recebe um item e uma lista em ordem crescente, retorna a lista em ordem crescente com todos os itens da lista inicial mais o item inserido.
@@ -65,9 +65,9 @@ uniao (x:xs) ys
 
 insere_ordenado :: (Ord a) => a -> [a] -> [a]
 insere_ordenado x [] = [x]               -- lista vazia: cria lista so com x
-insere_ordenado x (y:ys)
-  | x <= y    = x : y : ys              -- x cabe antes de y: insere e termina
-  | otherwise = y : insere_ordenado x ys -- y e menor: mantem y e insere x no resto
+insere_ordenado x (c:r)
+  | x <= c    = x : c : r              -- x cabe antes de c: insere e termina
+  | otherwise = c : insere_ordenado x r -- c e menor: mantem c e insere x no resto
 
 
 -- 23. picos: recebe uma lista de números e retorna os números que são maiores que seus vizinhos. Considere que a lista é circular, ou seja, o início e o fim estão ligados.
