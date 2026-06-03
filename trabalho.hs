@@ -19,24 +19,24 @@ insere_no_fim x (c:r) = c : insere_no_fim x r
 
 -- Exercicio 14 - Soma todos os elementos de uma lista numerica.
 somatorio :: Num a => [a] -> a
-somatorio []     = 0          -- lista vazia: soma e zero
-somatorio (x:xs) = x + somatorio xs  -- soma a cabeca com o somatorio do resto
+somatorio []    = 0              -- lista vazia: soma e zero
+somatorio (c:r) = c + somatorio r  -- soma a cabeca (c) com o somatorio do resto
 
 
 -- Exercicio 17 - Verifica se um elemento pertence a uma lista.
 pertence :: Eq a => a -> [a] -> Bool
-pertence _ []     = False             -- lista vazia: nao pertence
-pertence x (y:ys) = x == y           -- encontrou: retorna True
-                 || pertence x ys    -- || e curto-circuito: so busca o resto se necessario
+pertence _ []    = False             -- lista vazia: nao pertence
+pertence e (c:r) = e == c            -- encontrou: retorna True
+                || pertence e r      -- || e curto-circuito: so busca o resto se necessario
 
 -- Retorna a uniao das duas listas sem repeticao.
 -- Logica: para cada elemento da 1a lista, so inclui se nao estiver na 2a.
 
 uniao :: Eq a => [a] -> [a] -> [a]
-uniao [] ys = ys                          -- 1a lista esgotada: retorna a 2a inteira
-uniao (x:xs) ys
-  | pertence x ys = uniao xs ys          -- x ja esta em ys: ignora e continua
-  | otherwise     = x : uniao xs ys      -- x nao esta em ys: inclui na frente
+uniao [] ys = ys                     -- 1a lista esgotada: retorna a 2a inteira
+uniao (c:r) ys
+  | pertence c ys = uniao r ys       -- c ja esta em ys: ignora e continua
+  | otherwise     = c : uniao r ys   -- c nao esta em ys: inclui na frente
 
 
 -- Exercicio 20 - Insere um elemento numa lista mantendo a ordem crescente.
