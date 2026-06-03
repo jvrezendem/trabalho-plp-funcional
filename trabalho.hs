@@ -9,7 +9,7 @@
 
 -- 2. insere_no_fim: recebe um elemento e uma lista e insere o elemento no final da lista.
 
-insere_no_fim :: (Num t) t -> [t] -> [t] -- recebe um elemento de qualquer tipo e uma lista do mesmo tipo, retorna uma lista do mesmo tipo. classe Num para permitir operações numéricas.
+insere_no_fim :: t -> [t] -> [t] -- recebe um elemento de qualquer tipo e uma lista do mesmo tipo, retorna uma lista do mesmo tipo. 
 insere_no_fim x [] = [x] -- caso base: lista vazia, retorna uma nova lista contendo apenas o elemento x
 insere_no_fim x (c:r) = c : insere_no_fim x r -- caso recursivo: a cabeça da lista é mantida, e o elemento x é inserido no final da calda da lista
 
@@ -35,17 +35,20 @@ reverso :: [t] -> [t] -- recebe uma lista e retorna outra lista do mesmo tipo
 reverso [] = [] -- se a lista for vazia, retorna uma nova lista vazia
 reverso (c:r) = concatena (reverso r) [c] -- chama a função concatena para concatenar o reverso da calda com a cabeça da lista
 
--- Exercicio 14 - Soma todos os elementos de uma lista numerica.
+-- 14. Soma todos os elementos de uma lista numerica.
 somatorio :: (Num a) => [a] -> a
 somatorio []     = 0          -- lista vazia: soma e zero
 somatorio (x:xs) = x + somatorio xs  -- soma a cabeca com o somatorio do resto
 
 
--- Exercicio 17 - Verifica se um elemento pertence a uma lista.
+-- 17. uniao: recebe duas listas que não contenham elementos repetidos e retorna uma nova com todos os elementos das duas listas originais (sem repetição). 
+-- ex.: uniao [3,6,5,7] [2,9,7,5,1] [3,6,5,7,2,9,1]
+  
+-- Verifica se um elemento pertence a uma lista.
 pertence :: (Eq a) => a -> [a] -> Bool
 pertence _ []     = False             -- lista vazia: nao pertence
 pertence x (y:ys) = x == y           -- encontrou: retorna True
-                 || pertence x ys    -- || e curto-circuito: so busca o resto se necessario
+  || pertence x ys    -- || e curto-circuito: so busca o resto se necessario
 
 -- Retorna a uniao das duas listas sem repeticao.
 -- Logica: para cada elemento da 1a lista, so inclui se nao estiver na 2a.
@@ -57,7 +60,8 @@ uniao (x:xs) ys
   | otherwise     = x : uniao xs ys      -- x nao esta em ys: inclui na frente
 
 
--- Exercicio 20 - Insere um elemento numa lista mantendo a ordem crescente.
+-- 20. insere_ordenado: recebe um item e uma lista em ordem crescente, retorna a lista em ordem crescente com todos os itens da lista inicial mais o item inserido.
+-- ex.: insere_ordenado 2 [1,5,9] [1,2,5,9]
 
 insere_ordenado :: (Ord a) => a -> [a] -> [a]
 insere_ordenado x [] = [x]               -- lista vazia: cria lista so com x
@@ -66,8 +70,8 @@ insere_ordenado x (y:ys)
   | otherwise = y : insere_ordenado x ys -- y e menor: mantem y e insere x no resto
 
 
--- Exercicio 23 - Retorna os "picos": elementos maiores que ambos os vizinhos numa lista circular
--- (o primeiro vizinho da cabeca e o ultimo elemento, e vice-versa).
+-- 23. picos: recebe uma lista de números e retorna os números que são maiores que seus vizinhos. Considere que a lista é circular, ou seja, o início e o fim estão ligados.
+-- ex.: picos [2,3,5,10,5,5,6,2,3] [10,6,3]
 
 picos :: (Ord a) => [a] -> [a]
 picos []  = []   -- sem elementos: sem picos
