@@ -3,7 +3,7 @@
 -- Alunos:
     -- Daniel Reis - 202510364
     -- João Vitor Rezende Marciano - 202510356
-    -- Paulo Sérgio Mendes Taciano -
+    -- Paulo Sérgio Mendes Taciano - 202510345
 
 -- Questões: 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35 e 38
 
