@@ -83,3 +83,56 @@ picos l   = picosAux (last l) l (head l)
     picosAux ant (a:p:xs) pri       -- elemento do meio
       | a > ant && a > p = a : picosAux a (p:xs) pri  -- maior que vizinhos: e pico
       | otherwise        =     picosAux a (p:xs) pri  -- nao e pico: continua
+
+
+-- 26. todas_maiusculas: recebe uma string qualquer e retorna outra string onde todas as letras são maiúsculas.
+
+todas_maiusculas :: [Char] -> [Char] -- recebe uma lista de caracteres (string) e retorna outra lista de caracteres
+todas_maiusculas [] = [] -- caso base: string vazia, retorna string vazia
+todas_maiusculas (c:r) -- caso recursivo: verifica se a cabeça é uma letra minúscula usando seu código numérico
+    | codigo >= 97 && codigo <= 122 = toEnum (codigo - 32) : todas_maiusculas r -- se for minúscula (código entre 97 e 122), converte para maiúscula subtraindo 32 do código
+    | otherwise = c : todas_maiusculas r -- se não for letra minúscula, mantém o caractere inalterado
+    where codigo = fromEnum c -- obtém o código numérico do caractere usando fromEnum
+
+
+-- 29. variancia: recebe uma lista de números e retorna a variância (populacional) deles.
+
+variancia :: (Fractional a) => [a] -> a -- recebe uma lista de números e retorna a variância. classe Fractional para permitir divisão.
+variancia [] = 0 -- caso base: lista vazia, variância é zero
+variancia lista = somaDesvios lista media / tamanho lista -- variância = soma dos desvios quadráticos / número de elementos
+    where
+        media = somatorio lista / tamanho lista -- calcula a média aritmética dos elementos da lista
+        tamanho [] = 0 -- função auxiliar: lista vazia tem tamanho zero
+        tamanho (_:r) = 1 + tamanho r -- função auxiliar: conta recursivamente os elementos da lista
+        somaDesvios [] _ = 0 -- função auxiliar: caso base, lista vazia, soma dos desvios é zero
+        somaDesvios (c:r) m = (c - m) * (c - m) + somaDesvios r m -- função auxiliar: calcula (elemento - média)² e soma com os desvios restantes
+
+
+-- 32. separa: separa os elementos de uma lista de números nas posições com zero.
+
+separa :: (Eq a, Num a) => [a] -> [[a]] -- recebe uma lista de números e retorna uma lista de listas. classes Eq e Num para comparação com zero.
+separa [] = [[]] -- caso base: lista vazia, retorna uma lista contendo uma lista vazia
+separa (c:r) -- caso recursivo: verifica se a cabeça é zero para decidir se deve separar
+    | c == 0 = [] : separa r -- se a cabeça for zero, cria uma nova sublista vazia e continua separando a calda
+    | otherwise = (c : cabeca) : calda -- se não for zero, insere a cabeça no início da primeira sublista do resultado
+    where (cabeca:calda) = separa r -- separa recursivamente a calda e decompõe o resultado em cabeça e calda das sublistas
+
+
+-- 35. soma_digitos: recebe um número natural e retorna a soma de seus dígitos.
+
+soma_digitos :: Integer -> Integer -- recebe um número inteiro e retorna outro número inteiro
+soma_digitos 0 = 0 -- caso base: número é zero, soma dos dígitos é zero
+soma_digitos n = mod n 10 + soma_digitos (div n 10) -- caso recursivo: soma o último dígito (mod n 10) com a soma dos dígitos restantes (div n 10 remove o último dígito)
+
+
+-- 38. quadrado_perfeito: verifica se um número é um quadrado perfeito sem usar uma função que calcula raiz quadrada.
+
+quadrado_perfeito :: Integer -> Bool -- recebe um número inteiro e retorna um valor booleano (True se for quadrado perfeito, False caso contrário)
+quadrado_perfeito n
+    | n < 0 = False -- números negativos não são quadrados perfeitos
+    | otherwise = verificaQuadrado 0 -- inicia a verificação a partir de 0
+    where
+        verificaQuadrado i -- função auxiliar: testa se i*i é igual a n
+            | i * i == n = True -- se i² é igual a n, então n é quadrado perfeito
+            | i * i > n = False -- se i² ultrapassou n, então n não é quadrado perfeito
+            | otherwise = verificaQuadrado (i + 1) -- caso contrário, testa o próximo número
