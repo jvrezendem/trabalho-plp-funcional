@@ -9,10 +9,9 @@
 
 -- 2. insere_no_fim: recebe um elemento e uma lista e insere o elemento no final da lista.
 
-insere_no_fim :: (Num t) t -> [t] -> [t]
+insere_no_fim :: Num t => t -> [t] -> [t]
 insere_no_fim x [] = [x]
 insere_no_fim x (c:r) = c : insere_no_fim x r
-
 
 
 
@@ -26,11 +25,11 @@ somatorio (c:r) = c + somatorio r  -- soma a cabeca (c) com o somatorio do resto
 -- Exercicio 17 - Verifica se um elemento pertence a uma lista.
 pertence :: Eq a => a -> [a] -> Bool
 pertence _ []    = False             -- lista vazia: nao pertence
-pertence e (c:r) = e == c            -- encontrou: retorna True
-                || pertence e r      -- || e curto-circuito: so busca o resto se necessario
+pertence e (c:r)
+  | e == c    = True
+  | otherwise = pertence e r
 
 -- Retorna a uniao das duas listas sem repeticao.
--- Logica: para cada elemento da 1a lista, so inclui se nao estiver na 2a.
 
 uniao :: Eq a => [a] -> [a] -> [a]
 uniao [] ys = ys                     -- 1a lista esgotada: retorna a 2a inteira
@@ -43,9 +42,9 @@ uniao (c:r) ys
 
 insere_ordenado :: Ord a => a -> [a] -> [a]
 insere_ordenado x [] = [x]               -- lista vazia: cria lista so com x
-insere_ordenado x (y:ys)
-  | x <= y    = x : y : ys              -- x cabe antes de y: insere e termina
-  | otherwise = y : insere_ordenado x ys -- y e menor: mantem y e insere x no resto
+insere_ordenado x (y:r)
+  | x <= y    = x : y : r              -- x cabe antes de y: insere e termina
+  | otherwise = y : insere_ordenado x r -- y e menor: mantem y e insere x no resto
 
 
 -- Exercicio 23 - Retorna os "picos": elementos maiores que ambos os vizinhos numa lista circular
@@ -62,6 +61,6 @@ picos l   = picosAux (last l) l (head l)
     picosAux ant [a] pri            -- ultimo elemento da lista
       | a > ant && a > pri = [a]   -- maior que o anterior e que a cabeca: e pico
       | otherwise          = []
-    picosAux ant (a:p:xs) pri       -- elemento do meio
-      | a > ant && a > p = a : picosAux a (p:xs) pri  -- maior que vizinhos: e pico
-      | otherwise        =     picosAux a (p:xs) pri  -- nao e pico: continua
+    picosAux ant (a:p:r) pri        -- elemento do meio
+      | a > ant && a > p = a : picosAux a (p:r) pri  -- maior que vizinhos: e pico
+      | otherwise        =     picosAux a (p:r) pri  -- nao e pico: continua
